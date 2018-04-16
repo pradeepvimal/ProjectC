@@ -30,10 +30,13 @@ pipeline
 	}
 	
         stage('setBuildNumber')
-	{ 
+	{
         	steps
 		{
-               		sh 'ruby ../../setBuildNumber.rb ProjectC®-Info.plist ${BUILD_NUMBER}'
+			dir ('Mobile_build')
+			{
+               			sh 'ruby ../../setBuildNumber.rb ProjectC®-Info.plist ${BUILD_NUMBER}'
+			}
             	}
 	}
 }
