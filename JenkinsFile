@@ -19,24 +19,23 @@ pipeline
 			}
 		}
 
-        }
-
-        stage('Checkout')
-	{ 
-        	steps
-	 	{
-			checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'Mobile_build']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'b83dfd67-c98d-4334-a2c2-4de178bf9cd1', url: 'https://github.com/pradeepvimal/ProjectC.git']]]
-		}
-	}
-	
-        stage('setBuildNumber')
-	{
-        	steps
-		{
-			dir ('Mobile_build')
-			{
-               			sh 'ruby ../../setBuildNumber.rb ProjectC®-Info.plist ${BUILD_NUMBER}'
+        	stage('Checkout')
+		{ 
+        		steps
+	 		{
+				checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'Mobile_build']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'b83dfd67-c98d-4334-a2c2-4de178bf9cd1', url: 'https://github.com/pradeepvimal/ProjectC.git']]]
 			}
-            	}
+		}
+	
+        	stage('setBuildNumber')
+		{
+        		steps
+			{
+				dir ('Mobile_build')
+				{
+               				sh 'ruby ../../setBuildNumber.rb ProjectC®-Info.plist ${BUILD_NUMBER}'
+				}
+            		}
+		}
 	}
 }
