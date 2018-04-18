@@ -29,6 +29,7 @@ pipeline
 			}
 		}
 	
+		/*
         	stage('setBuildNumber')
 		{
         		steps
@@ -39,5 +40,6 @@ pipeline
 				}
             		}
 		}
+		*/
 	}
 }
