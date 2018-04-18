@@ -29,22 +29,7 @@ pipeline
 				checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'Mobile_build']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'b83dfd67-c98d-4334-a2c2-4de178bf9cd1', url: 'https://github.com/pradeepvimal/ProjectC.git']]]
 			}
 		}
-		/*
-		stage('ReleaseNotes') { 
-            	steps {
-		dir ('Mobile_build/Subway') {
-				withCredentials([string(credentialsId: 'P_MobileUser_PWD', variable: 'MobileUser_PWD')]) {
-				sh 'LAST_STABLE_BUILD_NUMBER_QUERY=lastStableBuild/buildNumber'
-				sh 'JOB_QUERY=${JOB_URL}${LAST_STABLE_BUILD_NUMBER_QUERY}'
-				sh 'LAST_STABLE_BUILD_JSON="curl -k -s ${JOB_QUERY} --user ${MobileUser}:${MobileUser_PWD}"'
-				//sh 'git log jenkinsFiletest.${LAST_STABLE_BUILD_JSON}..jenkinsFiletest.${BUILD_NUMBER} --pretty=format:"%cd(%h): %an - %s" --date=format:"%Y-%m-%d %H:%M:%S" >> ReleaseNotes.log'
-				sh 'echo "test build for hockeyapp upload" >> ReleaseNotes.log'
-		//	}
-		}
-            }
-        }
-	
-		*/
+		
         	stage('setBuildNumber')
 		{
         		steps
