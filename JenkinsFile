@@ -11,7 +11,8 @@ pipeline
     	agent any 
 
 	stages 
-	{		
+	{	
+		/*
 		stage('clean workspace')
 		{
 			steps
@@ -19,7 +20,7 @@ pipeline
 				//cleanWs()
 			}
 		}
-
+		*/
         	stage('Checkout')
 		{ 
         		steps
