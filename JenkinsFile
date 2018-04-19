@@ -47,9 +47,9 @@ pipeline
  						sh 'JOB_QUERY=${JOB_URL}${LAST_STABLE_BUILD_NUMBER_QUERY}'
 						//sh 'LAST_STABLE_BUILD_JSON=`curl -k -s ${JOB_QUERY} --user "${MobileUser}:${MobileUser_PWD}"`'
 						sh 'LAST_STABLE_BUILD_JSON=`curl -k -s ${JOB_QUERY} --user "${VSOUser}:${VSOPassword}"`'
-                        			println("LAST_STABLE_BUILD_JSON = ${LAST_STABLE_BUILD_JSON}")
-						//sh 'git log jenkinsFiletest.${LAST_STABLE_BUILD_JSON}..jenkinsFiletest.${BUILD_NUMBER} --pretty=format:"%cd(%h): %an - %s" --date=format:"%Y-%m-%d %H:%M:%S" >> ReleaseNotes.log'
-						sh 'echo "test build for hockeyapp upload" >> ReleaseNotes.log'
+                        			//println("LAST_STABLE_BUILD_JSON = ${LAST_STABLE_BUILD_JSON}")
+						sh 'git log jenkinsFiletest.${LAST_STABLE_BUILD_JSON}..jenkinsFiletest.${BUILD_NUMBER} --pretty=format:"%cd(%h): %an - %s" --date=format:"%Y-%m-%d %H:%M:%S" >> ReleaseNotes.log'
+						//sh 'echo "test build for hockeyapp upload" >> ReleaseNotes.log'
 					}
             			}
 			}
