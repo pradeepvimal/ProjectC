@@ -7,6 +7,7 @@ pipeline
         	WORKSPACE = "${workspace}"
 		JOB_URL="http://ec2-34-245-222-35.eu-west-1.compute.amazonaws.com:8080/job/My_Test_Jobs/job/pipeline_test"
         	LANG="en_US.UTF-8"
+		MobileUser="subway_mobile"
    	}	
    
     	agent any 
@@ -29,6 +30,22 @@ pipeline
 				checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'Mobile_build']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'b83dfd67-c98d-4334-a2c2-4de178bf9cd1', url: 'https://github.com/pradeepvimal/ProjectC.git']]]
 			}
 		}
+		
+		stage('ReleaseNotes')
+		{ 
+            	steps
+			{
+				withCredentials([string(credentialsId: 'P_MobileUser_PWD', variable: 'MobileUser_PWD')])
+				{
+					sh 'LAST_STABLE_BUILD_NUMBER_QUERY=lastStableBuild/buildNumber'
+					sh 'JOB_QUERY=${JOB_URL}${LAST_STABLE_BUILD_NUMBER_QUERY}'
+					sh 'LAST_STABLE_BUILD_JSON="curl -k -s ${JOB_QUERY} --user ${MobileUser}:${MobileUser_PWD}"'
+					//git log developFR.${LAST_STABLE_BUILD_JSON}..developFR.${BUILD_NUMBER} --pretty=format:"%cd(%h): %an - %s" --date=format:"%Y-%m-%d %H:%M:%S" >> ReleaseNotes.log
+					echo "LAST_STABLE_BUILD_JSON=$LAST_STABLE_BUILD_JSON"
+					echo "test build for hockeyapp upload" >> ReleaseNotes.log
+				}
+            		}
+		}	
 		
         	stage('setBuildNumber')
 		{
