@@ -43,9 +43,9 @@ pipeline
 					{
 						sh 'git remote set-url origin ${VSOUser}:${VSOPassword}@github.com/pradeepvimal/ProjectC.git'
 						//sh 'git remote set-url origin git@github.com:pradeepvimal/PROJECTC.git'
-						sh 'git config --global user.email "pkv2000_1you@yahoo.com"'
+						//sh 'git config --global user.email "pkv2000_1you@yahoo.com"'
   						//sh 'git config --global user.name "pradeepvimal"'
-						//sh 'git tag -a jenkinsFiletest.${BUILD_NUMBER} -m "build jenkinsFiletest.${BUILD_NUMBER}" ${GIT_COMMIT}'
+						sh 'git tag -a jenkinsFiletest.${BUILD_NUMBER} -m "build jenkinsFiletest.${BUILD_NUMBER}" ${GIT_COMMIT}'
 						//sh 'git tag -a jenkinsFiletest.${BUILD_NUMBER} -m "build jenkinsFiletest.${BUILD_NUMBER}"'
                         			sh 'git push --tags'
                     			}
