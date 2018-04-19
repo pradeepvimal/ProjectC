@@ -8,7 +8,9 @@ pipeline
 		JOB_URL="http://ec2-34-245-222-35.eu-west-1.compute.amazonaws.com:8080/job/My_Test_Jobs/job/pipeline_test/"
         	LANG="en_US.UTF-8"
 		MobileUser="subway_mobile"
-		//LAST_STABLE_BUILD_NUMBER_QUERY="lastStableBuild/buildNumber"
+		LAST_STABLE_BUILD_NUMBER_QUERY="lastStableBuild/buildNumber"
+		JOB_QUERY="${JOB_URL}${LAST_STABLE_BUILD_NUMBER_QUERY}"
+		LAST_STABLE_BUILD_JSON="curl -k -s "${JOB_QUERY}"--user ${VSOUser}:${VSOPassword}"
    	}	
    
     	agent any 
