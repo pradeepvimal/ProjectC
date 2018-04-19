@@ -39,7 +39,7 @@ pipeline
 				{
 					sh 'LAST_STABLE_BUILD_NUMBER_QUERY=lastStableBuild/buildNumber'
 					//println("LAST_STABLE_BUILD_NUMBER_QUERY=${LAST_STABLE_BUILD_NUMBER_QUERY}")
-					sh 'JOB_QUERY=${JOB_URL}${LAST_STABLE_BUILD_NUMBER_QUERY}'
+					sh 'JOB_QUERY=${JOB_URL}/${LAST_STABLE_BUILD_NUMBER_QUERY}'
 					//println("JOB_QUERY=${JOB_QUERY}")
 					sh 'LAST_STABLE_BUILD_JSON="curl -k -s ${JOB_QUERY}--user ${VSOUser}:${VSOPassword}"'
 					//git log developFR.${LAST_STABLE_BUILD_JSON}..developFR.${BUILD_NUMBER} --pretty=format:"%cd(%h): %an - %s" --date=format:"%Y-%m-%d %H:%M:%S" >> ReleaseNotes.log
