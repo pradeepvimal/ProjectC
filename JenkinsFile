@@ -41,7 +41,7 @@ pipeline
 				{
 					withCredentials([usernamePassword(credentialsId: 'b83dfd67-c98d-4334-a2c2-4de178bf9cd1', passwordVariable: 'VSOPassword', usernameVariable: 'VSOUser')])
 					{
-						sh 'git remote set-url origin https://${VSOUser}:${VSOPassword}@subwaytechnology.visualstudio.com/DefaultCollection/SD_MobileApp/_git/subway-mob-ios'
+						sh 'git remote set-url origin https://${VSOUser}:${VSOPassword}@github.com/pradeepvimal/ProjectC.git'
 					    	sh 'git tag -a jenkinsFiletest.${BUILD_NUMBER} -m "build jenkinsFiletest.${BUILD_NUMBER}" ${GIT_COMMIT}'
 					    	//sh 'git tag -a jenkinsFiletest.${BUILD_NUMBER} -m "build jenkinsFiletest.${BUILD_NUMBER}"'
                         			sh 'git push --tags'
