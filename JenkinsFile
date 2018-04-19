@@ -5,7 +5,7 @@ pipeline
 	environment
  	{
         	WORKSPACE = "${workspace}"
-		JOB_URL="http://ec2-34-245-222-35.eu-west-1.compute.amazonaws.com:8080/job/My_Test_Jobs/job/pipeline_test"
+		JOB_URL="http://ec2-34-245-222-35.eu-west-1.compute.amazonaws.com:8080/job/My_Test_Jobs/job/pipeline_test/"
         	LANG="en_US.UTF-8"
 		MobileUser="subway_mobile"
    	}	
@@ -38,7 +38,9 @@ pipeline
 				withCredentials([string(credentialsId: 'P_MobileUser_PWD', variable: 'MobileUser_PWD')])
 				{
 					sh 'LAST_STABLE_BUILD_NUMBER_QUERY=lastStableBuild/buildNumber'
+					println("LAST_STABLE_BUILD_NUMBER_QUERY=${LAST_STABLE_BUILD_NUMBER_QUERY}")
 					sh 'JOB_QUERY=${JOB_URL}${LAST_STABLE_BUILD_NUMBER_QUERY}'
+					println("JOB_QUERY=${JOB_QUERY}")
 					sh 'LAST_STABLE_BUILD_JSON="curl -k -s ${JOB_QUERY} --user ${MobileUser}:${MobileUser_PWD}"'
 					//git log developFR.${LAST_STABLE_BUILD_JSON}..developFR.${BUILD_NUMBER} --pretty=format:"%cd(%h): %an - %s" --date=format:"%Y-%m-%d %H:%M:%S" >> ReleaseNotes.log
 					echo "LAST_STABLE_BUILD_JSON=$LAST_STABLE_BUILD_JSON"
