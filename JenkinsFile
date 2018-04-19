@@ -5,7 +5,7 @@ pipeline
 	environment
  	{
         	WORKSPACE = "${workspace}"
-		JOB_URL="
+		JOB_URL="http://ec2-34-245-222-35.eu-west-1.compute.amazonaws.com:8080/job/My_Test_Jobs/job/pipeline_test"
         	LANG="en_US.UTF-8"
    	}	
    
