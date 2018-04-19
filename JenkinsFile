@@ -10,7 +10,7 @@ pipeline
 		MobileUser="subway_mobile"
 		LAST_STABLE_BUILD_NUMBER_QUERY="lastStableBuild/buildNumber"
 		JOB_QUERY="${JOB_URL}${LAST_STABLE_BUILD_NUMBER_QUERY}"
-		LAST_STABLE_BUILD_JSON="curl -k -s "${JOB_QUERY}"--user ${VSOUser}:${VSOPassword}"
+		LAST_STABLE_BUILD_JSON=""
    	}	
    
     	agent any 
