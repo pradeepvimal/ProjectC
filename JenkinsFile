@@ -38,7 +38,7 @@ pipeline
 		{
             		steps
 			{
-				dir ('Mobile_code')
+				dir ('Mobile_build')
 				{
 					sh """
 					VERSION_NAME=`grep "^VERSION_NAME=" gradle.properties | awk -F'=' '{print $NF}' `
