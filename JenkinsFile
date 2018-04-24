@@ -41,9 +41,11 @@ pipeline
 				dir ('Mobile_build')
 				{
 					sh """
+					ls -lrt
+					cat gradle.properties
 					VERSION_NAME=`grep "^VERSION_NAME=" gradle.properties | awk -F'=' '{print $NF}' `
-					"""				
-					sh 'touch Test_${VERSION_NAME}_${BUILD_NUMBER}.apk'
+					sh touch Test_${VERSION_NAME}_${BUILD_NUMBER}.apk
+					"""
 				}
            		}
 		}
