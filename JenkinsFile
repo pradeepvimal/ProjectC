@@ -40,12 +40,16 @@ pipeline
 			{
 				dir ('Mobile_build')
 				{
-					sh """
-					ls -lrt
-					cat gradle.properties
-					VERSION_NAME=`grep "^VERSION_NAME=" gradle.properties | awk -F'=' '{print $NF}' `
-					sh touch Test_${VERSION_NAME}_${BUILD_NUMBER}.apk
-					"""
+					withCredentials([usernamePassword(credentialsId: 'b83dfd67-c98d-4334-a2c2-4de178bf9cd1', passwordVariable: 'VSOPassword', usernameVariable: 'VSOUser')])
+					{
+					
+						sh """
+						ls -lrt
+						cat gradle.properties
+						VERSION_NAME=`grep "^VERSION_NAME=" gradle.properties | awk -F'=' '{print $NF}' `
+						touch Test_${VERSION_NAME}_${BUILD_NUMBER}.apk
+						"""
+					}
 				}
            		}
 		}
