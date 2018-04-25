@@ -34,21 +34,32 @@ pipeline
 			}
 		}
 		
-		stage('Create Files')
+		stage('Create Env File')
+		{
+			steps
+			{
+				withCredentials([usernamePassword(credentialsId: 'b83dfd67-c98d-4334-a2c2-4de178bf9cd1', passwordVariable: 'VSOPassword', usernameVariable: 'VSOUser')])
+				{
+					sh """
+					grep "^VERSION_NAME=" "${workspace}/Mobile_build/gradle.properties" > "${workspace}/Mobile_build/env.properties"
+					"""
+				}
+			}
+		}
+		stage('Read Env File')
 		{
             		steps
 			{
-				dir ('Mobile_build')
+				withCredentials([usernamePassword(credentialsId: 'b83dfd67-c98d-4334-a2c2-4de178bf9cd1', passwordVariable: 'VSOPassword', usernameVariable: 'VSOUser')])
 				{
-					withCredentials([usernamePassword(credentialsId: 'b83dfd67-c98d-4334-a2c2-4de178bf9cd1', passwordVariable: 'VSOPassword', usernameVariable: 'VSOUser')])
+					dir ('Mobile_build')
 					{
-					
-						sh """
-						ls -lrt
-						cat gradle.properties
-						VERSION_NAME=`grep "^VERSION_NAME=" gradle.properties | awk -F'=' '{print $NF}' `
-						touch Test_${VERSION_NAME}_${BUILD_NUMBER}.apk
-						"""
+						script
+						{
+							def props = readProperties  file: 'env.properties'
+							VERSION_NAME= props['VERSION_NAME']							
+						}					
+						sh "cp  gradle.properties ${VERSION_NAME}_gradle.properties"
 					}
 				}
            		}
