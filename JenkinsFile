@@ -40,9 +40,12 @@ pipeline
 			{
 				withCredentials([usernamePassword(credentialsId: 'b83dfd67-c98d-4334-a2c2-4de178bf9cd1', passwordVariable: 'VSOPassword', usernameVariable: 'VSOUser')])
 				{
-					sh """
-					grep "^VERSION_NAME=" "${workspace}/Mobile_build/gradle.properties" > "${workspace}/Mobile_build/env.properties"
-					"""
+					dir ('Mobile_build')
+					{
+						sh """
+						grep "^VERSION_NAME=" "gradle.properties" > "env.properties"
+						"""
+					}
 				}
 			}
 		}
