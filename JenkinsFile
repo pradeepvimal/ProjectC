@@ -5,14 +5,14 @@ pipeline
 	environment
  	{
         	WORKSPACE = "${workspace}"
-		LANG="en_US.UTF-8"
-		MobileUser="pradeepvimal"
+        	LANG="en_US.UTF-8"
+    		MobileUser="pradeepvimal"
+        	TRADEMARK_STRING = "ProjectC\u00AE"
 		LAST_STABLE_BUILD_NUMBER_QUERY="lastStableBuild/buildNumber"
 		JOB_QUERY="${JOB_URL}${LAST_STABLE_BUILD_NUMBER_QUERY}"
    	}	
    
     	agent any 
-
 	
 	stages 
 	{	
@@ -37,34 +37,24 @@ pipeline
 		{
 			steps
 			{
-				withCredentials([usernamePassword(credentialsId: 'b83dfd67-c98d-4334-a2c2-4de178bf9cd1', passwordVariable: 'VSOPassword', usernameVariable: 'VSOUser')])
-				{
-					dir ('Mobile_build')
-					{
-						sh """
-						grep "^VERSION_NAME=" "gradle.properties" > "env.properties"
-						echo "VERSION_NAME =$VERSION_NAME"
-						"""
-					}
-				}
+				sh '''Ver_String="$(defaults read ${WORKSPACE}/Mobile_code/${TRADEMARK_STRING}-Info CFBundleShortVersionString)"
+				echo "Version_String=$Ver_String" >> ${WORKSPACE}/Mobile_code/env.properties'''	
 			}
+			sh "cat ${WORKSPACE}/Mobile_code/env.properties"
 		}
 		stage('Read Env File')
 		{
             		steps
 			{
-				//withCredentials([usernamePassword(credentialsId: 'b83dfd67-c98d-4334-a2c2-4de178bf9cd1', passwordVariable: 'VSOPassword', usernameVariable: 'VSOUser')])
-				//{
-					dir ('Mobile_build')
+				dir ('Mobile_build')
+				{
+                  			script
 					{
-						script
-						{
-							def props = readProperties  file: 'env.properties'
-							VERSION_NAME= props['VERSION_NAME']							
-						}					
-						sh "cp  gradle.properties ${VERSION_NAME}_gradle.properties"
-					}
-				//}
+						def props = readProperties  file: 'env.properties'
+						Version_String= props['Version_String']
+					}					
+					sh "cp  ${TRADEMARK_STRING}-Info.plist ${VERSION_NAME}_${TRADEMARK_STRING}-Info.plist"					
+				}
            		}
 		}
 		/*
