@@ -37,10 +37,13 @@ pipeline
 		{
 			steps
 			{
-				sh '''Ver_String="$(defaults read ${WORKSPACE}/Mobile_code/${TRADEMARK_STRING}-Info CFBundleShortVersionString)"
-				echo "Version_String=$Ver_String" >> ${WORKSPACE}/Mobile_code/env.properties'''	
+				script
+				{
+					sh '''Ver_String="$(defaults read ${WORKSPACE}/Mobile_code/${TRADEMARK_STRING}-Info CFBundleShortVersionString)"
+					echo "Version_String=$Ver_String" >> ${WORKSPACE}/Mobile_code/env.properties'''	
+				}
+				sh "cat ${WORKSPACE}/Mobile_code/env.properties"
 			}
-			sh "cat ${WORKSPACE}/Mobile_code/env.properties"
 		}
 		stage('Read Env File')
 		{
