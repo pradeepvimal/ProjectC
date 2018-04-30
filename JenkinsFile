@@ -6,15 +6,14 @@ pipeline
  	{
         	WORKSPACE = "${workspace}"
 		LANG="en_US.UTF-8"
-		JOB_URL="http://ec2-34-245-222-35.eu-west-1.compute.amazonaws.com:8080/job/My_Test_Jobs/job/pipeline_test/"
-		//MobileUser="pradeepvimal"
+		MobileUser="pradeepvimal"
 		LAST_STABLE_BUILD_NUMBER_QUERY="lastStableBuild/buildNumber"
 		JOB_QUERY="${JOB_URL}${LAST_STABLE_BUILD_NUMBER_QUERY}"
-		LAST_STABLE_BUILD_JSON=""
    	}	
    
     	agent any 
 
+	
 	stages 
 	{	
 		
@@ -44,6 +43,7 @@ pipeline
 					{
 						sh """
 						grep "^VERSION_NAME=" "gradle.properties" > "env.properties"
+						echo "VERSION_NAME =$VERSION_NAME"
 						"""
 					}
 				}
@@ -53,8 +53,8 @@ pipeline
 		{
             		steps
 			{
-				withCredentials([usernamePassword(credentialsId: 'b83dfd67-c98d-4334-a2c2-4de178bf9cd1', passwordVariable: 'VSOPassword', usernameVariable: 'VSOUser')])
-				{
+				//withCredentials([usernamePassword(credentialsId: 'b83dfd67-c98d-4334-a2c2-4de178bf9cd1', passwordVariable: 'VSOPassword', usernameVariable: 'VSOUser')])
+				//{
 					dir ('Mobile_build')
 					{
 						script
@@ -64,7 +64,7 @@ pipeline
 						}					
 						sh "cp  gradle.properties ${VERSION_NAME}_gradle.properties"
 					}
-				}
+				//}
            		}
 		}
 		/*
